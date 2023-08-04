@@ -1,6 +1,8 @@
 import Highcharts from "highcharts";
 
 const engagementMessageOverTimeChartOptions = (messageCountList, channels) => {
+
+  // Filter channels that have more than one data point
   const filteredChannels = channels.filter((channel) => {
     const messageCountForChannel = messageCountList.filter(
       (messageCount) => messageCount.channelId === channel.value
@@ -8,6 +10,7 @@ const engagementMessageOverTimeChartOptions = (messageCountList, channels) => {
     return messageCountForChannel.length > 1;
   });
 
+  //Prepare data for each series
   const seriesData = filteredChannels.map((channel) => {
     const data = messageCountList
       .filter((messageCount) => messageCount.channelId === channel.value)
@@ -18,6 +21,7 @@ const engagementMessageOverTimeChartOptions = (messageCountList, channels) => {
     return { name: channel.name, data };
   });
 
+  // Changing the visual of the graph   
   const options = {
     chart: {
       type: "spline",
